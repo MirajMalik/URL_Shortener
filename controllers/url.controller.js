@@ -19,4 +19,14 @@ async function handleShortUrl(req,res) {
     return res.json({id : shortId});
 }
 
-module.exports = {handleShortUrl};
+
+async function handleAnalysis(req,res) {
+   const shortId = req.params.shortId;
+   const result = await URL.findOne({shortId});
+   return res.json({
+    totalClicks : result.visitHistory.length,
+    analysis : result.visitHistory,
+   });
+}
+
+module.exports = {handleShortUrl,handleAnalysis};
