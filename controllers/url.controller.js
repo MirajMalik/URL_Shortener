@@ -1,5 +1,6 @@
 const URL = require('../models/url.model')
 const shortid = require('shortid')
+
 async function handleShortUrl(req,res) {
     const body = req.body;
     if(!body.url){
@@ -8,10 +9,11 @@ async function handleShortUrl(req,res) {
         });
     }
 
-    const shortId = nanoid();
-    await URL.createObjectURL({
-        shortId : shortid,
-        redirectURL : body.url
+    const shortId = shortid();
+
+    await URL.create({
+        shortId : shortId,
+        redirectUrl : body.url
     });
 
     return res.json({id : shortId});
